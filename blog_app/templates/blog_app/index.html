@@ -1,0 +1,82 @@
+{% extends 'blog_app/base.html' %} {% block content %}
+
+<!-- スライダー -->
+<div class="p-5 text-center bg-light">
+  <div
+    id="carouselExampleControls"
+    class="carousel slide"
+    data-mdb-ride="carousel"
+  >
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <h1 class="mb-3">One hand read story</h1>
+        <h4 class="mb-3">100times,100hours,100km...</h4>
+      </div>
+      <div class="carousel-item">
+        <h1 class="mb-3">100にまつわる</h1>
+        <h4 class="mb-3">エピソードを集めました</h4>
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-mdb-target="#carouselExampleControls"
+      data-mdb-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-mdb-target="#carouselExampleControls"
+      data-mdb-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div></div>
+</div>
+
+<!-- カードボタン -->
+<div class="row row-cols-2 row-cols-md-4 g-3">
+  {% for item in post_list %}
+  <div class="col">
+    <button id="primary" class="btn btn-light" >
+      <!--img条件分岐 -->
+      <div class="card h-100">
+        {% if item.thumbnail %}
+        <a href="{% url 'blog_app:post_detail' item.id %}">
+          <img
+            src="{{ item.thumbnail.url}}"
+            class="card-img-top"
+            alt="{{item.title}}"
+          />
+        </a>
+        {% else %}
+        <a href="{% url 'blog_app:post_detail' item.id %}">
+          <img
+            src="https://mdbootstrap.com/img/new/standard/city/041.jpg"
+            class="card-img-top"
+            alt="{{item.title}}"
+          />
+        </a>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <!-- text-->
+          <p class="card-text">{{item.content|safe|truncatechars_html:12}}</p><!-- contentの12文字目までを反映-->
+          <hr />
+          <!-- カテゴリ、サブカテゴリ-->
+          <small>{{item.category}}</small>
+          <small>/{{item.subcategory}}</small>
+          <a href="{% url 'blog_app:post_detail' item.id %}"></a>
+        </div>
+      </div>
+    </button>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock%}

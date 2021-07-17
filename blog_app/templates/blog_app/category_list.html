@@ -1,0 +1,32 @@
+{%extends 'blog_app/base.html' %} {% block content %}
+<div class="row">
+  <div class="col-md-9">
+    <br>
+      <h2>Life stage</h2>
+    <br>
+  </div>
+</div>
+
+<div class="row">
+
+    {% for category in category_list %}
+      <div class = "col-md-4">
+       <br>
+       <div class = "card" >
+         <div class= "card-body">
+              <h4 class = "card-title">
+                <a style = "color:black" href="{% url 'blog_app:category_detail' category.name_en %}">{{ category.name }}</a><small>({{category.post_count}})</small>
+              </h4>
+              <a href="{% url 'blog_app:category_detail' category.name_en %}"><small>全て見る</small></a>
+            <hr>
+            {% for post in category.post_set.all|slice:":5" %}
+            <p><a href = "{% url 'blog_app:post_detail' post.id%}">{{post.title}}</a></p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+ </div>
+ <br> 
+{% endblock %}

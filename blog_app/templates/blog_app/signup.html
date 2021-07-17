@@ -1,0 +1,27 @@
+{%extends 'blog_app/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <br>
+    <h2>Sign up</h2>
+    <br>
+
+    <div class="card text-center">
+      <div class="span3 well">
+          <legend>New to 100story? Sign up!</legend>
+          <form accept-charset="UTF-8" action="" method="post">
+          {% csrf_token %}{{form.non_field_errors}}
+            {% for field in form%}
+                    <small>{{field.label}} </small>
+                    <p class="span3">{{field}}<p>
+                    {{ field.errors}}
+                    <br>
+            {% endfor%} 
+            <button class="btn btn-warning" type="submit">Sign up for 100story</button>
+          </form>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

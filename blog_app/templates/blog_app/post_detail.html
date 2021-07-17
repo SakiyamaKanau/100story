@@ -1,0 +1,75 @@
+{% extends 'blog_app/base.html' %} {% block content %}
+
+<div class="row">
+  <br />
+  
+  <!-- 投稿img -->
+  <div class="col-md-3">
+    <br />
+    <br />
+    <div class="card">
+      <div class="bg-image">
+        <!--img条件分岐 -->
+        {% if object.thumbnail%}
+        <img src="{{ object.thumbnail.url }}" class="img-fluid" alt="{{object.title}}" />
+        {% else %}
+        <img src="https://mdbootstrap.com/img/new/standard/city/053.jpg" class="img-fluid" alt="Sample" />
+        {% endif %}
+      </div>
+    </div>
+    <br />
+    <br />
+    <!-- 戻るボタンを追加 -->
+    <a href = "javascript:void(0);" onclick="window.history.back();" class="btn btn-outline-dark">戻る</a>
+    
+    <br />
+    <br />
+  </div>
+  
+  <!-- 投稿内容 -->
+  <div class="col-md-6">
+    <br />
+    <br />
+    <div class="card">
+
+      <div class="card-body">
+        <!-- 内容 改行safe-->
+        <p class="card-text">{{object.content|safe | linebreaksbr | urlize}}</p> <!-- linebreaksbrで改行safe-->
+        <!-- お気に入りボタン-->
+        <a href="{% url 'blog_app:like_add' object.pk %}"type="button" class="btn btn-danger btn-floating">
+          <i class="far fa-heart"></i>
+        </a>
+
+        <hr>
+        <!-- 編集/削除ボタン-->
+        {% if object.author == request.user %}
+        <a href="{% url 'blog_app:post_update' object.id %}" type="button" class="btn btn-info btn-rounded">
+          <i class="fas fa-pen"></i>
+        </a>
+        <a href="{% url 'blog_app:post_delete' object.id %}" type="button" class="btn btn-danger btn-rounded">
+          <i class="fas fa-trash" type="button"></i>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+    <br />
+    <br />
+  </div>
+<!-- サイドバー -->
+<div class="col-md-3">
+　
+  <h5 class="card-title">”{{object.category}}” 関連</h5>
+  <ol class="list-group list-group-numbered">
+    {% for item in category_posts%}
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+         {% comment %} <div class="fw-bold"><a href="{% url 'blog_app:post_detail' item.id %}">{{item.title}}</a></div> {% endcomment %}
+        </div>
+      </li>
+    {% endfor %}
+  </ol>
+</div>
+
+</div>
+
+{% endblock%}

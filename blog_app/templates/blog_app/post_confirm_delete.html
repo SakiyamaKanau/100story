@@ -1,0 +1,50 @@
+{%extends 'blog_app/base.html' %} {% block content %}
+<div class="row">
+  <div class="col-md-9">
+    <br />
+    <h2>100story削除</h2>
+    <br />
+
+    <div class="alert alert-danger" role="alert">
+      <form method="post">
+        {% csrf_token %}
+        <p>以下の内容を本当に削除しますか?</p>
+        <input type="submit" class="btn btn-danger" value="削除する" />
+      </form>
+    </div>
+    <br />
+  </div>
+
+    <!-- 投稿img -->
+  <div class="col-md-4">
+    <br />
+    <br />
+    <div class="card">
+      <div class="bg-image">
+        <img src="https://mdbootstrap.com/img/new/standard/city/053.jpg" class="img-fluid" alt="Sample" />
+        <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
+          <div class="d-flex justify-content-center align-items-center h-100">
+            <p class="text-white mb-0">{{object.title}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+  </div>
+
+  <!-- 投稿内容 -->
+  <div class="col-md-4">
+    <br />
+    <br />
+    <div class="card" style="width: 30rem">
+      <div class="card-body">
+        <p class="card-text">{{object.content}}</p>
+        <p class="text-end">{{object.content|length}}/100</p>
+      </div>
+    </div>
+    <br />
+    <br />
+  </div>
+</div>
+{% endblock%}
